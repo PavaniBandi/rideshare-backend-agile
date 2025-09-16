@@ -1,5 +1,6 @@
 package com.example.rideshare_backend_agile.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,18 @@ public class RideController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(ride);
+    }
+
+    @GetMapping("/history")
+    public ResponseEntity<?> rideHistory(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.findByEmail(userDetails.getUsername()).orElseThrow();
+        List<Ride> rides = rideService.getRidesForUser(user);
+        return ResponseEntity.ok(rides);
+    }
+
+    @GetMapping("/requested")
+    public ResponseEntity<?> getActiveRides() {
+        return ResponseEntity.ok(rideService.getActiveRides());
     }
 
 }

@@ -25,7 +25,7 @@ public class RideService {
 
         // If status is ACCEPTED and driverId is provided, assign the driver
         if (status == Ride.Status.ACCEPTED && driverId != null) {
-            ride.setDriverId(Integer.valueOf(driverId));
+            ride.setDriverId(Integer.parseInt(driverId));
         }
 
         return rideRepository.save(ride);
